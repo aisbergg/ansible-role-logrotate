@@ -1,0 +1,26 @@
+{{ ansible_managed | comment }}
+
+# see logrotate.conf(5) for details
+
+{% for option in options %}
+{{ option }}
+{% endfor %}
+
+# packages drop log rotation information into this directory
+include /etc/logrotate.d
+{% if ansible_os_family | lower == "archlinux" %}
+
+/var/log/wtmp {
+    monthly
+    create 0664 root utmp
+    minsize 1M
+    rotate 1
+}
+
+/var/log/btmp {
+    missingok
+    monthly
+    create 0600 root utmp
+    rotate 1
+}
+{% endif %}

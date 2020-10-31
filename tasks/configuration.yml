@@ -1,0 +1,30 @@
+---
+- name: configure logrotate
+  template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.conf
+    lstrip_blocks: true
+    owner: root
+    group: root
+    mode: 0644
+  vars:
+    options: "{{ (logrotate_options | length > 0) | ternary(logrotate_options, __logrotate_distribution_options) }}"
+
+- name: configure applications for logrotate
+  template:
+    src: application.j2
+    dest: "/etc/logrotate.d/{{ app.name | mandatory }}"
+    lstrip_blocks: true
+    trim_blocks: true
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ logrotate_applications }}"
+  loop_control:
+    loop_var: app
+
+- name: enable/disable hourly rotation
+  file:
+    src: "{{ logrotate_hourly_rotation_enabled | bool | ternary('/etc/cron.daily/logrotate', omit) }}"
+    dest: /etc/cron.hourly/logrotate
+    state: "{{ logrotate_hourly_rotation_enabled | bool | ternary('link', 'absent') }}"

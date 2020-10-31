@@ -1,0 +1,7 @@
+---
+__logrotate_distribution_options:
+  - weekly
+  - rotate 4
+  - create
+  - dateext
+  - su root syslog
