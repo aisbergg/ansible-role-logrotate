@@ -1,0 +1,6 @@
+---
+__logrotate_distribution_options:
+  - weekly
+  - rotate 4
+  - create
+  - "tabooext + .pacorig .pacnew .pacsave"

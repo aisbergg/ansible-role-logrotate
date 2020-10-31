@@ -1,0 +1,22 @@
+{{ ansible_managed | comment }}
+{% macro script(name, lines) %}
+  {% set lines = [lines] if lines is string else lines %}
+  {% if lines | default([]) %}
+    {{ name }}
+    {% for line in lines %}
+        {{ line | indent(8) }}
+    {% endfor %}
+    endscript
+  {% endif %}
+{% endmacro %}
+
+{{ app.logs | mandatory | map("quote") | join(" ") }} {
+{% for option in app.options %}
+    {{ option }}
+{% endfor %}
+{{- script("prerotate", app.prerotate) }}
+{{- script("postrotate", app.postrotate) }}
+{{- script("preremove", app.preremove) }}
+{{- script("firstaction", app.firstaction) }}
+{{- script("lastaction", app.lastaction) }}
+}

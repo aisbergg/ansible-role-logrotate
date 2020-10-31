@@ -1,0 +1,13 @@
+---
+# repository to use for the installation
+logrotate_debian_repo: ""
+logrotate_redhat_enablerepo: ""
+
+# list of global configuration options (defaults to the distribution options)
+logrotate_options: []
+
+# enable hourly rotation
+logrotate_hourly_rotation_enabled: false
+
+# list of custom log rotation information for applications
+logrotate_applications: []
