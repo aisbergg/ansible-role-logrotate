@@ -22,6 +22,7 @@
   loop: "{{ logrotate_applications }}"
   loop_control:
     loop_var: app
+    label: "{{ app.name | mandatory }}"
 
 - name: enable/disable hourly rotation
   file:
