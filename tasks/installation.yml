@@ -1,20 +1,20 @@
 ---
 - name: install logrotate requirements (Debian)
-  apt:
+  ansible.builtin.apt:
     name: logrotate
     state: present
     default_release: "{{ (logrotate_debian_repo | length > 0) | ternary(logrotate_debian_repo, omit) }}"
   when: ansible_os_family | lower == 'debian'
 
 - name: install logrotate requirements (RedHat)
-  yum:
+  ansible.builtin.yum:
     name: logrotate
     state: present
     enablerepo: "{{ (logrotate_redhat_enablerepo | length > 0) | ternary(logrotate_redhat_enablerepo, omit) }}"
   when: ansible_os_family | lower == 'redhat'
 
 - name: install logrotate requirements (Arch Linux)
-  package:
+  ansible.builtin.package:
     name: logrotate
     state: present
   when: ansible_os_family | lower == 'archlinux'
