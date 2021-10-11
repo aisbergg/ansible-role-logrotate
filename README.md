@@ -40,7 +40,7 @@ None.
       - compress
     logrotate_applications:
       - name: httpd
-        logs: 
+        logs:
           - "/var/log/httpd/*log"
         options:
           - missingok
